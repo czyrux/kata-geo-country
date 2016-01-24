@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CountryKata</string>
+
+    <string name="detail_population">Population:</string>
+
+    <string name="error_general">There are a problem accessing the server.</string>
+    <string name="error_network">There is no network available.</string>
+</resources>
