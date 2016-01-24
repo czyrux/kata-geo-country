@@ -14,7 +14,7 @@ Exercise to practice MVP pattern (Model View Presenter) in Android.
 - Create UI model.
 - Modify item content
  - Add region as: `"region, subregion"` or nothing if the fields are empty.
- - Modify population information as: `"less than 1 mill"` or rounded amount if >1mill and < 50 mill (10.315 --> ~ 10mill) otherwise
+ - Modify population information as: `"less than 1 mill"` or rounded amount otherwise (10.315 --> ~ 10mill)
 - Handle navigation
 - Add new Activity: CountryDetailActivity following MVP.
 
