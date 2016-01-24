@@ -1,6 +1,6 @@
 Kata Geo Country for Android 
 =======
-This kata will cover architectural patterns as MVP (Model View Presenter) in Android.
+This kata will cover MVP pattern (Model View Presenter) in Android.
 
 > Consumes API: http://restcountries.eu/
 
@@ -12,6 +12,10 @@ This kata will cover architectural patterns as MVP (Model View Presenter) in And
 
 - Create Presenter and move all the presentation logic in there.
 - Create UI model.
+- Modify item content
+ - Add region as: <region, subregion> or nothing if the fields are empty.
+ - Set population in buckets: "less than 1 mill", rounded amount if >1mill and < 50 mill (10.315 --> ~ 10mill) or "more than 50 mill"
+
 - Handle navigation
 - Add new Activity: CountryDetailActivity following MVP.
 

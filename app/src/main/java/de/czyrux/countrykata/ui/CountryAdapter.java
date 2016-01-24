@@ -47,14 +47,13 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
         imageLoader.load(imageUrl, holder.image);
         holder.name.setText(country.getName());
         holder.population.setText(String.format(Locale.GERMAN, "%,d", country.getPopulation()));
-        holder.region.setText(country.getRegion() + ", " + country.getSubregion());
+        holder.region.setText(country.getSubregion());
     }
 
     @Override
     public int getItemCount() {
         return countries.size();
     }
-
 
     public static class CountryViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.country_item_image)
