@@ -2,14 +2,22 @@ package de.czyrux.countrykata;
 
 import android.app.Application;
 
-import de.czyrux.countrykata.core.inject.DefaultDependenciesFactory;
-import de.czyrux.countrykata.core.inject.Injector;
+import de.czyrux.countrykata.di.AppComponent;
+import de.czyrux.countrykata.di.AppModule;
+import de.czyrux.countrykata.di.DaggerAppComponent;
 
 public class CountryApp extends Application {
+
+    private AppComponent component;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Injector.using(new DefaultDependenciesFactory());
+
+        component = DaggerAppComponent.builder().appModule(new AppModule()).build();
+    }
+
+    public AppComponent getComponent() {
+        return component;
     }
 }
