@@ -1,21 +1,28 @@
-package de.czyrux.countrykata.core.inject;
+package de.czyrux.countrykata.di;
 
-import de.czyrux.countrykata.core.data.image.LogNoOpImageLoader;
+import dagger.Module;
+import dagger.Provides;
+
+import de.czyrux.countrykata.core.data.image.PicassoImageLoader;
 import de.czyrux.countrykata.core.data.rest.RestCountryRepositoryFactory;
 import de.czyrux.countrykata.core.domain.country.CountryRepository;
 import de.czyrux.countrykata.core.domain.country.CountryService;
 import de.czyrux.countrykata.core.domain.image.ImageLoader;
 
-public class DefaultDependenciesFactory implements DependenciesFactory{
+@AppScope
+@Module
+public class AppModule {
 
-    @Override
-    public CountryService createCountryService() {
+    @AppScope
+    @Provides
+    public CountryService provideCountryService() {
         CountryRepository countryRepository = RestCountryRepositoryFactory.create();
         return new CountryService(countryRepository);
     }
 
-    @Override
-    public ImageLoader createImageLoader() {
-        return new LogNoOpImageLoader();
+    @AppScope
+    @Provides
+    public ImageLoader provideImageLoader() {
+        return new PicassoImageLoader();
     }
 }
