@@ -34,19 +34,7 @@ class RestCountryRepository implements CountryRepository {
     }
 
     @Override
-    public Country getCountryByCode(String countryCode) {
-
-        Country country = null;
-        List<Country> countryList = getCountriesByCode(new String[]{countryCode});
-        if (countryList != null && countryList.size() >= 1) {
-            country = countryList.get(0);
-        }
-
-        return country;
-    }
-
-    @Override
-    public List<Country> getCountriesByCode(String[] countryCodes) {
+    public void getCountriesByCode(String[] countryCodes, final Callback<List<Country>> callback) {
 
         StringBuilder codesQuery = new StringBuilder();
         for (String code : countryCodes) {
@@ -57,17 +45,47 @@ class RestCountryRepository implements CountryRepository {
             codesQuery.append(code);
         }
 
-        return restApi.getCountriesByCodes(codesQuery.toString());
+        restApi.getCountriesByCodes(codesQuery.toString(), new retrofit.Callback<List<Country>>() {
+            @Override
+            public void success(List<Country> countries, Response response) {
+                callback.onSuccess(countries);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                callback.onFailure(error);
+            }
+        });
     }
 
     @Override
-    public List<Country> getCountriesByRegion(String region) {
-        return restApi.getCountriesByRegion(region);
+    public void getCountriesByRegion(String region, final Callback<List<Country>> callback) {
+        restApi.getCountriesByRegion(region, new retrofit.Callback<List<Country>>() {
+            @Override
+            public void success(List<Country> countries, Response response) {
+                callback.onSuccess(countries);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                callback.onFailure(error);
+            }
+        });
     }
 
     @Override
-    public List<Country> getCountriesByLanguage(String language) {
-        return restApi.getCountriesByLanguage(language);
+    public void getCountriesByLanguage(String language, final Callback<List<Country>> callback) {
+        restApi.getCountriesByLanguage(language, new retrofit.Callback<List<Country>>() {
+            @Override
+            public void success(List<Country> countries, Response response) {
+                callback.onSuccess(countries);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                callback.onFailure(error);
+            }
+        });
     }
 
 }

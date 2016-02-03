@@ -1,0 +1,131 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="@dimen/detail_block_padding"
+              android:orientation="vertical">
+
+    <!-- Region -->
+
+    <TextView
+        android:id="@+id/country_detail_section_location"
+        style="@style/detailTextSectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <View
+        style="@style/detailBlockSeparator"/>
+
+    <!-- Latitude, Longitude -->
+
+    <LinearLayout
+        android:id="@+id/country_detail_latitude_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/country_detail_section_location"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/detailTextLabel"
+            android:paddingRight="@dimen/detail_block_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_latitude"/>
+
+        <TextView
+            android:id="@+id/country_detail_latitude"
+            style="@style/detailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/country_detail_longitude_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/country_detail_latitude_layout"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/detailTextLabel"
+            android:paddingRight="@dimen/detail_block_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_longitude"/>
+
+        <TextView
+            android:id="@+id/country_detail_longitude"
+            style="@style/detailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <!-- TimeZones -->
+
+    <LinearLayout
+        android:id="@+id/country_detail_timezones_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/country_detail_longitude_layout"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/detailTextLabel"
+            android:paddingRight="@dimen/detail_block_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_timezones"/>
+
+        <TextView
+            android:id="@+id/country_detail_timezones"
+            style="@style/detailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+    <!-- Border countries -->
+
+    <TextView
+        android:id="@+id/country_detail_neighbours_label"
+        style="@style/detailTextLabel"
+        android:layout_below="@+id/country_detail_timezones_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_neighbour_countries"/>
+
+    <TextView
+        android:id="@+id/country_detail_neighbour_countries"
+        android:layout_below="@+id/country_detail_neighbours_label"
+        style="@style/detailText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/detail_block_padding"/>
+
+    <!-- Buttons -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/country_detail_longitude_layout"
+        android:orientation="horizontal"
+        android:gravity="right">
+
+        <Button
+            android:id="@+id/country_detail_explore_region"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/detailText"
+            android:text="@string/detail_btn_explore_region"/>
+
+        <Button
+            android:id="@+id/country_detail_explore_neighbours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/detailText"
+            android:text="@string/detail_btn_explore_neighbours" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

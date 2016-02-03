@@ -26,4 +26,28 @@
         <item name="android:textSize">11sp</item>
         <item name="android:textStyle">italic</item>
     </style>
+
+    <!-- Detail -->
+
+    <style name="detailTextTitle" parent="@style/txtLarge">
+    </style>
+
+    <style name="detailTextSectionTitle" parent="@style/txtMedium">
+    </style>
+
+    <style name="detailTextLabel" parent="@style/txtSmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="detailText" parent="@style/txtSmall">
+    </style>
+
+    <style name="detailBlockSeparator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@android:color/darker_gray</item>
+        <item name="android:layout_marginTop">@dimen/detail_block_padding</item>
+        <item name="android:layout_marginBottom">@dimen/detail_block_margin</item>
+    </style>
 </resources>

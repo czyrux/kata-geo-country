@@ -1,4 +1,4 @@
-package de.czyrux.countrykata.ui;
+package de.czyrux.countrykata.ui.list;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,9 +17,12 @@ import butterknife.ButterKnife;
 import de.czyrux.countrykata.R;
 import de.czyrux.countrykata.core.domain.Callback;
 import de.czyrux.countrykata.core.domain.country.Country;
+import de.czyrux.countrykata.core.domain.country.CountryService;
+import de.czyrux.countrykata.core.domain.image.ImageLoader;
 import de.czyrux.countrykata.core.inject.Injector;
+import de.czyrux.countrykata.ui.detail.CountryDetailActivity;
 
-public class CountryListActivity extends AppCompatActivity {
+public class CountryListActivity extends AppCompatActivity implements CountryListListener {
 
     @Bind(R.id.country_list)
     RecyclerView countryListView;
@@ -30,18 +33,24 @@ public class CountryListActivity extends AppCompatActivity {
     @Bind(R.id.country_list_empty)
     TextView emptyTextView;
 
+    private CountryService countryService;
+    private ImageLoader imageLoader;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_country_list);
+        setContentView(R.layout.list_country_activity);
         ButterKnife.bind(this);
+
+        countryService = Injector.countryService();
+        imageLoader = Injector.imageLoader();
 
         setupViews();
     }
 
     private void setupViews() {
         countryListView.setLayoutManager(new LinearLayoutManager(this));
-        countryListView.setAdapter(new CountryAdapter(Injector.imageLoader()));
+        countryListView.setAdapter(new CountryAdapter(imageLoader, this));
 
         emptyTextView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
@@ -50,7 +59,7 @@ public class CountryListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Injector.countryService().getAllCountries(new Callback<List<Country>>() {
+        countryService.getAllCountries(new Callback<List<Country>>() {
             @Override
             public void onSuccess(List<Country> response) {
                 progressBar.setVisibility(View.GONE);
@@ -63,5 +72,10 @@ public class CountryListActivity extends AppCompatActivity {
                 Log.d("Tag", Log.getStackTraceString(error));
             }
         });
+    }
+
+    @Override
+    public void onCountryClicked(Country country, int position) {
+        CountryDetailActivity.launch(this, country.getAlpha2Code());
     }
 }

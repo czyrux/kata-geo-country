@@ -14,11 +14,11 @@ public interface CountryApi {
     void getAllCountries(Callback<List<Country>> callback);
 
     @GET("/alpha")
-    List<Country> getCountriesByCodes(@Query("codes") String codes);
+    void getCountriesByCodes(@Query("codes") String codes, Callback<List<Country>> callback);
 
     @GET("/region/{region}")
-    List<Country> getCountriesByRegion(@Path("region") String region);
+    void getCountriesByRegion(@Path("region") String region, Callback<List<Country>> callback);
 
     @GET("/lang/{language}")
-    List<Country> getCountriesByLanguage(@Path("language") String language);
+    void getCountriesByLanguage(@Path("language") String language, Callback<List<Country>> callback);
 }

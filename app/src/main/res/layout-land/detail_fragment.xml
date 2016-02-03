@@ -1,0 +1,96 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="de.czyrux.geocountry.ui.detail.CountryDetailFragment">
+
+    <ImageView
+        android:id="@+id/country_detail_flag"
+        android:layout_width="@dimen/detail_image_width"
+        android:layout_height="@dimen/detail_image_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/detail_block_padding"
+        android:scaleType="centerCrop"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarStyle="outsideOverlay"
+        android:clipToPadding="false"
+        android:layout_marginTop="@dimen/detail_block_padding"
+        android:paddingTop="@dimen/detail_image_height"
+        android:paddingLeft="@dimen/detail_horizontal_margin"
+        android:paddingRight="@dimen/detail_horizontal_margin"
+        android:paddingBottom="@dimen/detail_vertical_margin">
+
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:cardBackgroundColor="@android:color/white"
+            card_view:cardCornerRadius="@dimen/detail_card_corner_radius">
+
+            <LinearLayout
+                android:id="@+id/country_detail_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Header Image block -->
+
+
+                <include layout="@layout/detail_section_names"/>
+
+
+                <!-- Location block -->
+
+                <include
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/detail_block_margin"
+                    layout="@layout/detail_section_location"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/detail_block_margin"
+                    android:layout_weight="1.0">
+
+                    <!-- Translations block -->
+
+                    <include
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.45"
+                        android:layout_marginRight="@dimen/detail_block_margin"
+                        layout="@layout/detail_section_translations"/>
+
+                    <!-- Misc block -->
+
+
+                    <include
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.45"
+                        layout="@layout/detail_section_misc"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+    </ScrollView>
+
+
+    <ProgressBar
+        android:id="@+id/country_detail_progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+</FrameLayout>

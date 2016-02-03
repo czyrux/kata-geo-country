@@ -1,0 +1,113 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/detail_block_padding">
+
+    <TextView
+        android:id="@+id/country_detail_section_others"
+        style="@style/detailTextSectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_section_others"/>
+
+    <View
+        android:id="@+id/country_detail_section_others_line"
+        android:layout_below="@+id/country_detail_section_others"
+        style="@style/detailBlockSeparator"/>
+
+    <!-- Calling codes -->
+
+    <TextView
+        android:id="@+id/country_detail_callingcodes_label"
+        style="@style/detailTextLabel"
+        android:paddingRight="@dimen/detail_block_padding"
+        android:layout_below="@+id/country_detail_section_others_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_callingcodes"/>
+
+    <TextView
+        android:id="@+id/country_detail_callingcodes"
+        style="@style/detailText"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/country_detail_section_others_line"
+        android:layout_toRightOf="@+id/country_detail_callingcodes_label"
+        android:layout_height="wrap_content"/>
+
+    <!-- Net domain -->
+
+    <TextView
+        android:id="@+id/country_detail_topleveldomain_label"
+        style="@style/detailTextLabel"
+        android:paddingRight="@dimen/detail_block_padding"
+        android:layout_below="@+id/country_detail_callingcodes_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_topleveldomain"/>
+
+    <TextView
+        android:id="@+id/country_detail_topleveldomain"
+        style="@style/detailText"
+        android:layout_below="@+id/country_detail_callingcodes_label"
+        android:layout_width="wrap_content"
+        android:layout_toRightOf="@+id/country_detail_topleveldomain_label"
+        android:layout_height="wrap_content"/>
+
+    <!-- Currency -->
+
+    <TextView
+        android:id="@+id/country_detail_currency_label"
+        style="@style/detailTextLabel"
+        android:paddingRight="@dimen/detail_block_padding"
+        android:layout_below="@+id/country_detail_topleveldomain_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_currency"/>
+
+    <TextView
+        android:id="@+id/country_detail_currency"
+        style="@style/detailText"
+        android:layout_below="@+id/country_detail_topleveldomain_label"
+        android:layout_width="wrap_content"
+        android:layout_toRightOf="@+id/country_detail_currency_label"
+        android:layout_height="wrap_content"/>
+
+    <!-- Languages -->
+
+    <TextView
+        android:id="@+id/country_detail_languages_label"
+        style="@style/detailTextLabel"
+        android:paddingRight="@dimen/detail_block_padding"
+        android:layout_below="@+id/country_detail_currency_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_languages"/>
+
+    <TextView
+        android:id="@+id/country_detail_languages"
+        style="@style/detailText"
+        android:layout_below="@+id/country_detail_currency_label"
+        android:layout_width="wrap_content"
+        android:layout_toRightOf="@+id/country_detail_languages_label"
+        android:layout_height="wrap_content"/>
+
+    <!-- Alpha codes -->
+
+    <TextView
+        android:id="@+id/country_detail_alphacode_label"
+        style="@style/detailTextLabel"
+        android:paddingRight="@dimen/detail_block_padding"
+        android:layout_below="@+id/country_detail_languages_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_alphacodes"/>
+
+    <TextView
+        android:id="@+id/country_detail_alphacode"
+        style="@style/detailText"
+        android:layout_below="@+id/country_detail_languages_label"
+        android:layout_width="wrap_content"
+        android:layout_toRightOf="@+id/country_detail_alphacode_label"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

@@ -3,6 +3,7 @@ package de.czyrux.countrykata.core.domain.country;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Arrays;
+import java.util.Map;
 
 public class Country {
 
@@ -59,6 +60,9 @@ public class Country {
 
     @SerializedName("latlng")
     private float[] latlong;
+
+    @SerializedName("translations")
+    private Map<String, String> translations;
 
     public Country() {
     }
@@ -221,6 +225,14 @@ public class Country {
 
     public void setLatlong(float[] latlong) {
         this.latlong = latlong;
+    }
+
+    public Map<String, String> getTranslations() {
+        return translations;
+    }
+
+    public void setTranslations(Map<String, String> translations) {
+        this.translations = translations;
     }
 
     @Override
