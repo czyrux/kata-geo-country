@@ -31,7 +31,8 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
         this.countries = new ArrayList<>(20);
     }
 
-    public void addCountries(List<Country> countries) {
+    public void setCountries(List<Country> countries) {
+        this.countries.clear();
         this.countries.addAll(countries);
         this.notifyDataSetChanged();
     }
