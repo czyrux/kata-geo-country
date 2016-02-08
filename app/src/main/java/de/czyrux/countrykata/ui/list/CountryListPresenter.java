@@ -5,10 +5,10 @@ import java.util.List;
 import de.czyrux.countrykata.core.domain.Callback;
 import de.czyrux.countrykata.core.domain.country.Country;
 import de.czyrux.countrykata.core.domain.country.CountryService;
-import de.czyrux.countrykata.ui.Presenter;
 import de.czyrux.countrykata.ui.TransformerUtil;
 import de.czyrux.countrykata.ui.list.model.CountryTransformer;
 import de.czyrux.countrykata.ui.list.model.CountryUIModel;
+import de.czyrux.countrykata.ui.presenter.Presenter;
 
 public class CountryListPresenter implements Presenter<CountryListView>, CountryListListener{
 
@@ -18,11 +18,13 @@ public class CountryListPresenter implements Presenter<CountryListView>, Country
 
     private CountryListView view;
     private List<Country> countryList;
+    private boolean isLoading;
 
     public CountryListPresenter(CountryService service, CountryTransformer transformer, CountryListNavigator navigator) {
         this.service = service;
         this.transformer = transformer;
         this.navigator = navigator;
+        isLoading = false;
     }
 
     @Override
@@ -30,17 +32,20 @@ public class CountryListPresenter implements Presenter<CountryListView>, Country
         this.view = view;
         if (countryList == null) {
             this.view.showProgressBar();
-            service.getAllCountries(new Callback<List<Country>>() {
-                @Override
-                public void onSuccess(List<Country> countries) {
-                    handleSuccess(countries);
-                }
+            if (!isLoading) {
+                isLoading = true;
+                service.getAllCountries(new Callback<List<Country>>() {
+                    @Override
+                    public void onSuccess(List<Country> countries) {
+                        handleSuccess(countries);
+                    }
 
-                @Override
-                public void onFailure(Throwable error) {
-                    handleError(error);
-                }
-            });
+                    @Override
+                    public void onFailure(Throwable error) {
+                        handleError(error);
+                    }
+                });
+            }
         } else {
             handleSuccess(countryList);
         }
@@ -52,9 +57,12 @@ public class CountryListPresenter implements Presenter<CountryListView>, Country
     }
 
     @Override
-    public void onDestroyed() { }
+    public void onDestroyed() {
+        // Some clean ups
+    }
 
     private void handleSuccess(List<Country> countryList) {
+        this.isLoading = true;
         this.countryList = countryList;
         if (this.view == null) {
             return;
