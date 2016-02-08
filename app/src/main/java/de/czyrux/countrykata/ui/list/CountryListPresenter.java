@@ -1,13 +1,13 @@
 package de.czyrux.countrykata.ui.list;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.czyrux.countrykata.core.domain.Callback;
 import de.czyrux.countrykata.core.domain.country.Country;
 import de.czyrux.countrykata.core.domain.country.CountryService;
+import de.czyrux.countrykata.ui.Presenter;
 
-public class CountryListPresenter {
+public class CountryListPresenter implements Presenter<CountryListView>{
 
     private final CountryService service;
     private CountryListView view;
@@ -17,6 +17,7 @@ public class CountryListPresenter {
         this.service = service;
     }
 
+    @Override
     public void onViewAttached(final CountryListView view) {
         this.view = view;
         if (countryList == null) {
@@ -37,17 +38,14 @@ public class CountryListPresenter {
         }
     }
 
+    @Override
     public void onViewDetached() {
         this.view = null;
     }
 
-    private void handleError(Throwable error) {
-        if (this.view == null) {
-            return;
-        }
+    @Override
+    public void onDestroyed() {
 
-        this.view.hideProgressBar();
-        this.view.showError();
     }
 
     private void handleSuccess(List<Country> countryList) {
@@ -61,7 +59,16 @@ public class CountryListPresenter {
         if (countryList == null || countryList.isEmpty()) {
             this.view.showEmptyText();
         } else {
-            this.view.showCountryList(new ArrayList<>(countryList.subList(0, 5)));
+            this.view.showCountryList(countryList);
         }
+    }
+
+    private void handleError(Throwable error) {
+        if (this.view == null) {
+            return;
+        }
+
+        this.view.hideProgressBar();
+        this.view.showError();
     }
 }
