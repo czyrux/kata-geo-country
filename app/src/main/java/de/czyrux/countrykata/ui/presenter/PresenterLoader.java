@@ -2,7 +2,6 @@ package de.czyrux.countrykata.ui.presenter;
 
 import android.content.Context;
 import android.support.v4.content.Loader;
-import android.util.Log;
 
 public final class PresenterLoader<T extends Presenter> extends Loader<T>{
 
@@ -16,32 +15,28 @@ public final class PresenterLoader<T extends Presenter> extends Loader<T>{
 
     @Override
     protected void onStartLoading() {
-        Log.e("loader", "onStartLoading");
 
+        // if we already own an instance of our presenter, simply deliver it.
         if (presenter != null) {
             deliverResult(presenter);
             return;
         }
 
+        // Otherwise, force a load
         forceLoad();
     }
 
     @Override
     protected void onForceLoad() {
-        Log.e("loader", "onForceLoad");
+        // Create the Presenter using the Factory
         presenter = factory.create();
+
+        // Deliver the result
         deliverResult(presenter);
     }
 
     @Override
-    protected void onStopLoading() {
-        Log.e("loader", "onStopLoading");
-        // called on activity stop
-    }
-
-    @Override
     protected void onReset() {
-        Log.e("loader", "onReset");
         presenter.onDestroyed();
         presenter = null;
     }
