@@ -1,7 +1,35 @@
 <resources>
     <string name="app_name">CountryKata</string>
 
+    <string name="dash">-</string>
+
     <string name="detail_population">Population:</string>
+    <string name="detail_section_translations">Translations</string>
+    <string name="detail_section_others">Other data</string>
+
+    <string name="detail_capital">Capital:</string>
+    <string name="detail_relevance">Relevance:</string>
+    <string name="detail_demonym">Demonym:</string>
+
+    <string name="detail_longitude">Longitude:</string>
+    <string name="detail_latitude">Latitude:</string>
+
+    <string name="detail_btn_explore_region">Explore region</string>
+    <string name="detail_btn_explore_neighbours">Explore neighbours</string>
+
+    <string name="detail_area">Area:</string>
+    <string name="detail_area_units">km2</string>
+    <string name="detail_gini">Gini:</string>
+    <string name="detail_timezones">Timezones:</string>
+    <string name="detail_neighbour_countries">Neighbour Countries:</string>
+    <string name="detail_no_neighbours">None</string>
+    <string name="detail_neighbours_title">{name} Neighbours</string>
+
+    <string name="detail_callingcodes">Calling code:</string>
+    <string name="detail_topleveldomain">Internet domain:</string>
+    <string name="detail_currency">Currency:</string>
+    <string name="detail_languages">Languages:</string>
+    <string name="detail_alphacodes">Alpha codes:</string>
 
     <string name="error_general">There are a problem accessing the server.</string>
     <string name="error_network">There is no network available.</string>

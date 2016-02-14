@@ -7,11 +7,9 @@ import de.czyrux.countrykata.core.domain.Callback;
 public interface CountryRepository {
     void getAllCountries(Callback<List<Country>> callback);
 
-    Country getCountryByCode(String countryCode);
+    void getCountriesByCode(String[] countryCodes, Callback<List<Country>> callback);
 
-    List<Country> getCountriesByCode(String[] countryCodes);
+    void getCountriesByRegion(String region, Callback<List<Country>> callback);
 
-    List<Country> getCountriesByRegion(String region);
-
-    List<Country> getCountriesByLanguage(String language);
+    void getCountriesByLanguage(String language, Callback<List<Country>> callback);
 }

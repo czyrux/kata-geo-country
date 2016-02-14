@@ -1,4 +1,4 @@
-package de.czyrux.countrykata.ui;
+package de.czyrux.countrykata.ui.list;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,31 +23,29 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
 
     private final ImageLoader imageLoader;
     private final List<Country> countries;
+    private final CountryListListener listListener;
 
-    public CountryAdapter(ImageLoader imageLoader) {
+    public CountryAdapter(ImageLoader imageLoader, CountryListListener listListener) {
         this.imageLoader = imageLoader;
+        this.listListener = listListener;
         this.countries = new ArrayList<>(20);
     }
 
-    public void addCountries(List<Country> countries) {
+    public void setCountries(List<Country> countries) {
+        this.countries.clear();
         this.countries.addAll(countries);
         this.notifyDataSetChanged();
     }
 
     @Override
     public CountryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new CountryViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_country, parent, false));
+        return new CountryViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_country_item, parent, false), listListener);
     }
 
     @Override
     public void onBindViewHolder(CountryViewHolder holder, int position) {
         Country country = countries.get(position);
-
-        String imageUrl = CountryImageBuilder.obtainImageUrl(country);
-        imageLoader.load(imageUrl, holder.image);
-        holder.name.setText(country.getName());
-        holder.population.setText(String.format(Locale.GERMAN, "%,d", country.getPopulation()));
-        holder.region.setText(country.getSubregion());
+        holder.bind(country,imageLoader);
     }
 
     @Override
@@ -65,9 +63,27 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
         @Bind(R.id.country_item_region)
         TextView region;
 
-        CountryViewHolder(View view) {
+        private final CountryListListener listListener;
+
+        CountryViewHolder(View view, final CountryListListener listListener) {
             super(view);
+            this.listListener = listListener;
             ButterKnife.bind(this, view);
+
+        }
+
+        public void bind(final Country country, ImageLoader imageLoader) {
+            String imageUrl = CountryImageBuilder.obtainImageUrl(country);
+            imageLoader.load(imageUrl, image);
+            name.setText(country.getName());
+            population.setText(String.format(Locale.GERMAN, "%,d", country.getPopulation()));
+            region.setText(country.getSubregion());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listListener.onCountryClicked(country, getAdapterPosition());
+                }
+            });
         }
     }
 }

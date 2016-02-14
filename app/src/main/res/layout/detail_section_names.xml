@@ -1,0 +1,142 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/detail_block_padding"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/country_detail_nativename"
+        style="@style/detailTextTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <View
+        style="@style/detailBlockSeparator"/>
+
+    <TextView
+        android:id="@+id/country_detail_name"
+        style="@style/detailTextLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/detail_block_padding"/>
+
+    <!-- Capital -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/country_detail_capital_label"
+            style="@style/detailTextLabel"
+            android:paddingRight="@dimen/detail_block_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_capital"/>
+
+        <TextView
+            android:id="@+id/country_detail_capital"
+            style="@style/detailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <!-- Demonym -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/detailTextLabel"
+            android:paddingRight="@dimen/detail_block_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_demonym"/>
+
+        <TextView
+            android:id="@+id/country_detail_demonym"
+            style="@style/detailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <!-- Population -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/detailTextLabel"
+            android:paddingRight="@dimen/detail_block_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_population"/>
+
+        <TextView
+            android:id="@+id/country_detail_population"
+            style="@style/detailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <!-- Area -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/detailTextLabel"
+            android:paddingRight="@dimen/detail_block_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_area"/>
+
+        <TextView
+            android:id="@+id/country_detail_area"
+            style="@style/detailText"
+            android:paddingRight="@dimen/detail_block_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            style="@style/detailTextLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_area_units"/>
+
+    </LinearLayout>
+
+    <!-- Gini -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/detailTextLabel"
+            android:paddingRight="@dimen/detail_block_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_gini"/>
+
+        <TextView
+            android:id="@+id/country_detail_gini"
+            style="@style/detailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>
