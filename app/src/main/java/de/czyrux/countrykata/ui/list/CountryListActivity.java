@@ -1,18 +1,23 @@
 package de.czyrux.countrykata.ui.list;
 
+import java.util.List;
+
 import android.os.Bundle;
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+
 import android.view.View;
+
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
 import de.czyrux.countrykata.R;
 import de.czyrux.countrykata.core.domain.country.Country;
 import de.czyrux.countrykata.core.domain.country.CountryService;
@@ -21,6 +26,9 @@ import de.czyrux.countrykata.core.inject.Injector;
 import de.czyrux.countrykata.ui.detail.CountryDetailActivity;
 
 public class CountryListActivity extends AppCompatActivity implements CountryListListener, CountryListView {
+
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
 
     @Bind(R.id.country_list)
     RecyclerView countryListView;
@@ -35,10 +43,12 @@ public class CountryListActivity extends AppCompatActivity implements CountryLis
     private CountryListPresenter presenter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_country_activity);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
 
         imageLoader = Injector.imageLoader();
         setupViews();
@@ -76,7 +86,7 @@ public class CountryListActivity extends AppCompatActivity implements CountryLis
     }
 
     @Override
-    public void showCountryList(List<Country> countryList) {
+    public void showCountryList(final List<Country> countryList) {
         ((CountryAdapter) countryListView.getAdapter()).setCountries(countryList);
     }
 
@@ -91,7 +101,7 @@ public class CountryListActivity extends AppCompatActivity implements CountryLis
     }
 
     @Override
-    public void onCountryClicked(Country country, int position) {
+    public void onCountryClicked(final Country country, final int position) {
         CountryDetailActivity.launch(this, country.getAlpha2Code());
     }
 }
