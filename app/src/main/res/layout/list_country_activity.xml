@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.list.CountryListActivity">
 
+    <include layout="@layout/toolbar"
+        android:id="@id/toolbar"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/country_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/toolbar"
         android:clipToPadding="false"
         android:divider="@android:color/transparent"
         android:padding="@dimen/list_padding"
@@ -18,12 +23,14 @@
         android:id="@+id/country_list_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_centerInParent="true"
         android:gravity="center" />
 
     <ProgressBar
         android:id="@+id/country_list_progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_gravity="center" />
 
-</FrameLayout>
+</RelativeLayout>
