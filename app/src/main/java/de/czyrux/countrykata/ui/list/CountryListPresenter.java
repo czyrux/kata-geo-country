@@ -8,15 +8,14 @@ import de.czyrux.countrykata.core.domain.country.CountryService;
 import de.czyrux.countrykata.ui.TransformerUtil;
 import de.czyrux.countrykata.ui.list.model.CountryTransformer;
 import de.czyrux.countrykata.ui.list.model.CountryUIModel;
-import de.czyrux.countrykata.ui.presenter.Presenter;
 
-public class CountryListPresenter implements Presenter<CountryListView>, CountryListListener{
+public class CountryListPresenter implements CountryListContract.Presenter {
 
     private final CountryService service;
     private final CountryTransformer transformer;
     private final CountryListNavigator navigator;
 
-    private CountryListView view;
+    private CountryListContract.View view;
     private List<Country> countryList;
     private boolean isLoading;
 
@@ -28,7 +27,7 @@ public class CountryListPresenter implements Presenter<CountryListView>, Country
     }
 
     @Override
-    public void onViewAttached(final CountryListView view) {
+    public void onViewAttached(final CountryListContract.View view) {
         this.view = view;
         if (countryList == null) {
             this.view.showProgressBar();

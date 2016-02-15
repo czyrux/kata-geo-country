@@ -25,8 +25,8 @@ import de.czyrux.countrykata.ui.detail.CountryDetailActivity;
 import de.czyrux.countrykata.ui.list.model.CountryUIModel;
 import de.czyrux.countrykata.ui.presenter.PresenterLoader;
 
-public class CountryListActivity extends AppCompatActivity implements CountryListNavigator, CountryListView,
-        LoaderManager.LoaderCallbacks<CountryListPresenter> {
+public class CountryListActivity extends AppCompatActivity implements CountryListNavigator, CountryListContract.View,
+        LoaderManager.LoaderCallbacks<CountryListContract.Presenter> {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -41,7 +41,7 @@ public class CountryListActivity extends AppCompatActivity implements CountryLis
     TextView emptyTextView;
 
     private ImageLoader imageLoader;
-    private CountryListPresenter presenter;
+    private CountryListContract.Presenter presenter;
     private CountryService countryService;
 
     @Override
@@ -133,19 +133,19 @@ public class CountryListActivity extends AppCompatActivity implements CountryLis
     }
 
     @Override
-    public Loader<CountryListPresenter> onCreateLoader(int id, Bundle args) {
+    public Loader<CountryListContract.Presenter> onCreateLoader(int id, Bundle args) {
         Log.d("activity", "onCreateLoader");
         return new PresenterLoader<>(this, new CountrylistPresenterFactory(this, countryService));
     }
 
     @Override
-    public void onLoadFinished(Loader<CountryListPresenter> loader, CountryListPresenter presenter) {
+    public void onLoadFinished(Loader<CountryListContract.Presenter> loader, CountryListContract.Presenter presenter) {
         Log.d("activity", "onLoadFinished");
         this.presenter = presenter;
     }
 
     @Override
-    public void onLoaderReset(Loader<CountryListPresenter> loader) {
+    public void onLoaderReset(Loader<CountryListContract.Presenter> loader) {
         Log.d("activity", "onLoaderReset");
         presenter = null;
     }

@@ -3,6 +3,7 @@ package de.czyrux.countrykata.ui.list;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -22,7 +23,10 @@ import de.czyrux.countrykata.ui.list.model.CountryUIModel;
 import de.czyrux.countrykata.ui.presenter.BasePresenterActivity;
 import de.czyrux.countrykata.ui.presenter.PresenterFactory;
 
-public class CountryListActivity2 extends BasePresenterActivity<CountryListPresenter> implements CountryListNavigator, CountryListView {
+public class CountryListActivity2 extends BasePresenterActivity<CountryListContract.Presenter> implements CountryListNavigator, CountryListContract.View {
+
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
 
     @Bind(R.id.country_list)
     RecyclerView countryListView;
@@ -34,7 +38,7 @@ public class CountryListActivity2 extends BasePresenterActivity<CountryListPrese
     TextView emptyTextView;
 
     private ImageLoader imageLoader;
-    private CountryListPresenter presenter;
+    private CountryListContract.Presenter presenter;
     private CountryService countryService;
 
     @Override
@@ -84,16 +88,17 @@ public class CountryListActivity2 extends BasePresenterActivity<CountryListPrese
     }
 
     private void setupViews() {
+        setSupportActionBar(toolbar);
         countryListView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
-    protected PresenterFactory<CountryListPresenter> getPresenterFactory() {
+    protected PresenterFactory<CountryListContract.Presenter> getPresenterFactory() {
         return new CountrylistPresenterFactory(this, countryService);
     }
 
     @Override
-    protected void onPresenterCreated(CountryListPresenter presenter) {
+    protected void onPresenterCreated(CountryListContract.Presenter presenter) {
         this.presenter = presenter;
     }
 

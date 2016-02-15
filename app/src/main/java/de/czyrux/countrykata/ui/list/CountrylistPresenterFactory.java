@@ -4,7 +4,7 @@ import de.czyrux.countrykata.core.domain.country.CountryService;
 import de.czyrux.countrykata.ui.list.model.CountryTransformer;
 import de.czyrux.countrykata.ui.presenter.PresenterFactory;
 
-public class CountrylistPresenterFactory implements PresenterFactory<CountryListPresenter> {
+public class CountrylistPresenterFactory implements PresenterFactory<CountryListContract.Presenter> {
 
     private final CountryListNavigator navigator;
     private final CountryService countryService;
