@@ -22,7 +22,7 @@ import de.czyrux.countrykata.ui.detail.CountryDetailActivity;
 import de.czyrux.countrykata.ui.list.model.CountryTransformer;
 import de.czyrux.countrykata.ui.list.model.CountryUIModel;
 
-public class CountryListActivity extends AppCompatActivity implements CountryListListener, CountryListView {
+public class CountryListActivity extends AppCompatActivity implements CountryListView, CountryListNavigator {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -45,30 +45,30 @@ public class CountryListActivity extends AppCompatActivity implements CountryLis
         setContentView(R.layout.list_country_activity);
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
-
         imageLoader = Injector.imageLoader();
-        setupViews();
 
         CountryService countryService = Injector.countryService();
-        presenter = new CountryListPresenter(countryService, new CountryTransformer());
+        presenter = new CountryListPresenter(countryService, new CountryTransformer(), this);
+
+        setupViews();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         presenter.onViewAttached(this);
     }
 
     @Override
-    protected void onPause() {
+    protected void onStop() {
         presenter.onViewDetached();
-        super.onPause();
+        super.onStop();
     }
 
     private void setupViews() {
+        setSupportActionBar(toolbar);
         countryListView.setLayoutManager(new LinearLayoutManager(this));
-        countryListView.setAdapter(new CountryAdapter(imageLoader, this));
+        countryListView.setAdapter(new CountryAdapter(imageLoader, presenter));
     }
 
     @Override
@@ -98,7 +98,7 @@ public class CountryListActivity extends AppCompatActivity implements CountryLis
     }
 
     @Override
-    public void onCountryClicked(final CountryUIModel country, final int position) {
-        CountryDetailActivity.launch(this, country.getAlphaCode());
+    public void navigateToDetail(String alphaCode) {
+        CountryDetailActivity.launch(this, alphaCode);
     }
 }

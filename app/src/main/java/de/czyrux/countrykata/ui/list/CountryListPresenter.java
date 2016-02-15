@@ -10,17 +10,19 @@ import de.czyrux.countrykata.ui.TransformerUtil;
 import de.czyrux.countrykata.ui.list.model.CountryTransformer;
 import de.czyrux.countrykata.ui.list.model.CountryUIModel;
 
-public class CountryListPresenter implements Presenter<CountryListView>{
+public class CountryListPresenter implements Presenter<CountryListView>, CountryListListener{
 
     private final CountryService service;
     private final CountryTransformer transformer;
+    private final CountryListNavigator navigator;
 
     private CountryListView view;
     private List<Country> countryList;
 
-    public CountryListPresenter(CountryService service, CountryTransformer transformer) {
+    public CountryListPresenter(CountryService service, CountryTransformer transformer, CountryListNavigator navigator) {
         this.service = service;
         this.transformer = transformer;
+        this.navigator = navigator;
     }
 
     @Override
@@ -75,5 +77,11 @@ public class CountryListPresenter implements Presenter<CountryListView>{
 
         this.view.hideProgressBar();
         this.view.showError();
+    }
+
+
+    @Override
+    public void onCountryClicked(CountryUIModel country, int position) {
+        navigator.navigateToDetail(country.getAlphaCode());
     }
 }
