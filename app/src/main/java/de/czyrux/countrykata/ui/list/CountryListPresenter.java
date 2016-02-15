@@ -6,15 +6,21 @@ import de.czyrux.countrykata.core.domain.Callback;
 import de.czyrux.countrykata.core.domain.country.Country;
 import de.czyrux.countrykata.core.domain.country.CountryService;
 import de.czyrux.countrykata.ui.Presenter;
+import de.czyrux.countrykata.ui.TransformerUtil;
+import de.czyrux.countrykata.ui.list.model.CountryTransformer;
+import de.czyrux.countrykata.ui.list.model.CountryUIModel;
 
 public class CountryListPresenter implements Presenter<CountryListView>{
 
     private final CountryService service;
+    private final CountryTransformer transformer;
+
     private CountryListView view;
     private List<Country> countryList;
 
-    public CountryListPresenter(CountryService service) {
+    public CountryListPresenter(CountryService service, CountryTransformer transformer) {
         this.service = service;
+        this.transformer = transformer;
     }
 
     @Override
@@ -44,9 +50,7 @@ public class CountryListPresenter implements Presenter<CountryListView>{
     }
 
     @Override
-    public void onDestroyed() {
-
-    }
+    public void onDestroyed() { }
 
     private void handleSuccess(List<Country> countryList) {
         this.countryList = countryList;
@@ -59,7 +63,8 @@ public class CountryListPresenter implements Presenter<CountryListView>{
         if (countryList == null || countryList.isEmpty()) {
             this.view.showEmptyText();
         } else {
-            this.view.showCountryList(countryList);
+            List<CountryUIModel> uiModelList = TransformerUtil.transform(countryList, transformer);
+            this.view.showCountryList(uiModelList);
         }
     }
 
