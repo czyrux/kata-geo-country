@@ -20,7 +20,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.czyrux.countrykata.R;
-import de.czyrux.countrykata.core.domain.Callback;
 import de.czyrux.countrykata.core.domain.country.Country;
 import de.czyrux.countrykata.core.domain.country.CountryImageBuilder;
 import de.czyrux.countrykata.core.domain.country.CountryService;
@@ -28,7 +27,7 @@ import de.czyrux.countrykata.core.domain.image.ImageLoader;
 import de.czyrux.countrykata.core.inject.Injector;
 import de.czyrux.countrykata.ui.BaseFragment;
 
-public class CountryDetailFragment extends BaseFragment {
+public class CountryDetailFragment extends BaseFragment implements CountryDetailView {
 
     static final String ARG_CODE = "code";
 
@@ -93,11 +92,9 @@ public class CountryDetailFragment extends BaseFragment {
     @Bind(R.id.country_detail_alphacode)
     TextView alphaCodeTextView;
 
-    private CountryDetailListener listener;
-    private Country country;
+    private CountryDetailNavigator detailNavigator;
     private ImageLoader imageLoader;
-    private CountryService countryService;
-    private String countryCode;
+    private CountryDetailPresenter detailPresenter;
 
     public static CountryDetailFragment newInstance(String countryCode) {
         CountryDetailFragment fragment = new CountryDetailFragment();
@@ -106,13 +103,12 @@ public class CountryDetailFragment extends BaseFragment {
         fragment.setArguments(args);
         return fragment;
     }
-
-
+    
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            listener = (CountryDetailListener) activity;
+            detailNavigator = (CountryDetailNavigator) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement CountryDetailListener");
         }
@@ -120,7 +116,7 @@ public class CountryDetailFragment extends BaseFragment {
 
     @Override
     public void onDetach() {
-        listener = null;
+        detailNavigator = null;
         super.onDetach();
     }
 
@@ -128,9 +124,11 @@ public class CountryDetailFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        countryService = Injector.countryService();
+        CountryService countryService = Injector.countryService();
         imageLoader = Injector.imageLoader();
-        countryCode = getArguments().getString(ARG_CODE);
+        String countryCode = getArguments().getString(ARG_CODE);
+
+        detailPresenter = new CountryDetailPresenter(countryService, countryCode, detailNavigator);
     }
 
     @Override
@@ -138,114 +136,117 @@ public class CountryDetailFragment extends BaseFragment {
         return R.layout.detail_fragment;
     }
 
-
     @Override
-    public void onResume() {
-        super.onResume();
-        countryService.getCountryByCode(countryCode, new Callback<Country>() {
-            @Override
-            public void onSuccess(Country response) {
-                country = response;
-                populate();
-            }
-
-            @Override
-            public void onFailure(Throwable error) {
-                Toast.makeText(getActivity(), "Ups!", Toast.LENGTH_SHORT).show();
-                Log.d("Tag", Log.getStackTraceString(error));            }
-        });
+    public void onStart() {
+        super.onStart();
+        detailPresenter.onViewAttached(this);
     }
 
-    private void populate() {
-        if (country != null) {
-            progressBar.setVisibility(View.GONE);
-            contentView.setVisibility(View.VISIBLE);
-
-            // Main block
-            imageLoader.load(CountryImageBuilder.obtainImageUrl(country), imageView);
-
-            nativeNameTextView.setText(country.getNativeName());
-
-            StringBuilder altNameBuilder = new StringBuilder();
-            altNameBuilder.append(country.getName());
-
-            for (String name : country.getAlternativeSpellings()) {
-                altNameBuilder.append(", ").append(name);
-            }
-
-            nameTextView.setText(altNameBuilder.toString());
-
-            capitalTextView.setText(country.getCapital());
-            demonymTextView.setText(country.getDemonym());
-            populationTextView.setText(NUMBER_FORMAT.format(country.getPopulation()));
-            areaTextView.setText(NUMBER_FORMAT.format(country.getArea()));
-            giniTextView.setText(NUMBER_FORMAT.format(country.getGini()));
-
-            // Location block
-            locationTextView.setText(country.getRegion() + ", " + country.getSubregion());
-            timezonesTextView.setText(Arrays.toString(country.getTimezones()));
-
-
-            if (country.getLatlong() != null && country.getLatlong().length == 2) {
-                latitudeTextView.setText(String.valueOf(country.getLatlong()[0]));
-                longitudeTextView.setText(String.valueOf(country.getLatlong()[1]));
-            }
-
-            if (country.getBorders() != null && country.getBorders().length > 0) {
-
-                StringBuilder neighboursCountries = new StringBuilder();
-                for (String countryCode : country.getBorders()) {
-                    if (neighboursCountries.length() != 0) {
-                        neighboursCountries.append(", ");
-                    }
-
-                    neighboursCountries.append(countryCode);
-                }
-
-                neighboursTextView.setText(neighboursCountries.toString());
-            } else {
-                neighboursTextView.setText(R.string.detail_no_neighbours);
-                exploreNeighboursTextView.setVisibility(View.GONE);
-            }
-
-            // Translations block
-            translationsLayout.removeAllViews();
-
-            if (country.getTranslations() != null) {
-                for (Map.Entry<String, String> translationEntry : country.getTranslations().entrySet()) {
-                    View itemView = LayoutInflater.from(contentView.getContext()).inflate(R.layout.detail_translation_item, translationsLayout, false);
-                    ((TextView) ButterKnife.findById(itemView, R.id.country_detail_translation_item_language)).setText(translationEntry.getKey());
-                    ((TextView) ButterKnife.findById(itemView, R.id.country_detail_translation_item_translation)).setText(translationEntry.getValue());
-
-                    translationsLayout.addView(itemView);
-                }
-            }
-
-
-            // Misc block
-            callingCodesTextView.setText(Arrays.toString(country.getCallingCodes()));
-            topLevelDomainTextView.setText(Arrays.toString(country.getTopLevelDomain()));
-            currencyTextView.setText(Arrays.toString(country.getCurrencies()));
-            languagesTextView.setText(Arrays.toString(country.getLanguages()));
-            alphaCodeTextView.setText(country.getAlpha2Code() + ", " + country.getAlpha3Code());
-
-        } else {
-            contentView.setVisibility(View.GONE);
-            progressBar.setVisibility(View.VISIBLE);
-        }
+    @Override
+    public void onStop() {
+        detailPresenter.onViewDetached();
+        super.onStop();
     }
 
     @OnClick(R.id.country_detail_explore_region)
     public void onExploreRegion() {
-        if (listener != null) {
-            listener.onExploreCountryRegion(country);
-        }
+        detailPresenter.onExploreCountryRegion();
+
     }
 
     @OnClick(R.id.country_detail_explore_neighbours)
     public void onExploreNeighbours() {
-        if (listener != null) {
-            listener.onExploreCountryNeighbours(country);
+        detailPresenter.onExploreCountryNeighbours();
+    }
+
+    @Override
+    public void populateCountry(Country country) {
+        contentView.setVisibility(View.VISIBLE);
+
+        // Main block
+        imageLoader.load(CountryImageBuilder.obtainImageUrl(country), imageView);
+
+        nativeNameTextView.setText(country.getNativeName());
+
+        StringBuilder altNameBuilder = new StringBuilder();
+        altNameBuilder.append(country.getName());
+
+        for (String name : country.getAlternativeSpellings()) {
+            altNameBuilder.append(", ").append(name);
         }
+
+        nameTextView.setText(altNameBuilder.toString());
+
+        capitalTextView.setText(country.getCapital());
+        demonymTextView.setText(country.getDemonym());
+        populationTextView.setText(NUMBER_FORMAT.format(country.getPopulation()));
+        areaTextView.setText(NUMBER_FORMAT.format(country.getArea()));
+        giniTextView.setText(NUMBER_FORMAT.format(country.getGini()));
+
+        // Location block
+        locationTextView.setText(country.getRegion() + ", " + country.getSubregion());
+        timezonesTextView.setText(Arrays.toString(country.getTimezones()));
+
+
+        if (country.getLatlong() != null && country.getLatlong().length == 2) {
+            latitudeTextView.setText(String.valueOf(country.getLatlong()[0]));
+            longitudeTextView.setText(String.valueOf(country.getLatlong()[1]));
+        }
+
+        if (country.getBorders() != null && country.getBorders().length > 0) {
+
+            StringBuilder neighboursCountries = new StringBuilder();
+            for (String countryCode : country.getBorders()) {
+                if (neighboursCountries.length() != 0) {
+                    neighboursCountries.append(", ");
+                }
+
+                neighboursCountries.append(countryCode);
+            }
+
+            neighboursTextView.setText(neighboursCountries.toString());
+        } else {
+            neighboursTextView.setText(R.string.detail_no_neighbours);
+            exploreNeighboursTextView.setVisibility(View.GONE);
+        }
+
+        // Translations block
+        translationsLayout.removeAllViews();
+
+        if (country.getTranslations() != null) {
+            for (Map.Entry<String, String> translationEntry : country.getTranslations().entrySet()) {
+                View itemView = LayoutInflater.from(contentView.getContext()).inflate(R.layout.detail_translation_item, translationsLayout, false);
+                ((TextView) ButterKnife.findById(itemView, R.id.country_detail_translation_item_language)).setText(translationEntry.getKey());
+                ((TextView) ButterKnife.findById(itemView, R.id.country_detail_translation_item_translation)).setText(translationEntry.getValue());
+
+                translationsLayout.addView(itemView);
+            }
+        }
+
+
+        // Misc block
+        callingCodesTextView.setText(Arrays.toString(country.getCallingCodes()));
+        topLevelDomainTextView.setText(Arrays.toString(country.getTopLevelDomain()));
+        currencyTextView.setText(Arrays.toString(country.getCurrencies()));
+        languagesTextView.setText(Arrays.toString(country.getLanguages()));
+        alphaCodeTextView.setText(country.getAlpha2Code() + ", " + country.getAlpha3Code());
+
+    }
+
+    @Override
+    public void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showErrorMessage(Throwable error) {
+        Toast.makeText(getActivity(), "Ups!", Toast.LENGTH_SHORT).show();
+        Log.d("Tag", Log.getStackTraceString(error));
     }
 }

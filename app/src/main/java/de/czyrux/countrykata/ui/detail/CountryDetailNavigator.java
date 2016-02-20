@@ -2,7 +2,7 @@ package de.czyrux.countrykata.ui.detail;
 
 import de.czyrux.countrykata.core.domain.country.Country;
 
-public interface CountryDetailListener {
+public interface CountryDetailNavigator {
 
     void onExploreCountryRegion(Country country);
 

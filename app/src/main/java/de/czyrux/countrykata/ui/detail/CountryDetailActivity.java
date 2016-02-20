@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 import de.czyrux.countrykata.R;
 import de.czyrux.countrykata.core.domain.country.Country;
 
-public class CountryDetailActivity extends AppCompatActivity implements CountryDetailListener {
+public class CountryDetailActivity extends AppCompatActivity implements CountryDetailNavigator {
 
     public static void launch(final Context context, final String countryCode) {
         Intent intent = new Intent(context, CountryDetailActivity.class);
