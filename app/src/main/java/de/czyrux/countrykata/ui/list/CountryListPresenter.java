@@ -8,7 +8,7 @@ import de.czyrux.countrykata.core.domain.country.CountryService;
 import de.czyrux.countrykata.ui.Presenter;
 import de.czyrux.countrykata.ui.TransformerUtil;
 import de.czyrux.countrykata.ui.list.model.CountryTransformer;
-import de.czyrux.countrykata.ui.list.model.CountryUIModel;
+import de.czyrux.countrykata.ui.list.model.CountryItemViewModel;
 
 public class CountryListPresenter implements Presenter<CountryListView>, CountryListListener{
 
@@ -65,8 +65,8 @@ public class CountryListPresenter implements Presenter<CountryListView>, Country
         if (countryList == null || countryList.isEmpty()) {
             this.view.showEmptyText();
         } else {
-            List<CountryUIModel> uiModelList = TransformerUtil.transform(countryList, transformer);
-            this.view.showCountryList(uiModelList);
+            List<CountryItemViewModel> viewModelList = TransformerUtil.transform(countryList, transformer);
+            this.view.showCountryList(viewModelList);
         }
     }
 
@@ -81,7 +81,7 @@ public class CountryListPresenter implements Presenter<CountryListView>, Country
 
 
     @Override
-    public void onCountryClicked(CountryUIModel country, int position) {
+    public void onCountryClicked(CountryItemViewModel country, int position) {
         navigator.navigateToDetail(country.getAlphaCode());
     }
 }

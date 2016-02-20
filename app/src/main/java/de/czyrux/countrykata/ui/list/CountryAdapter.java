@@ -14,13 +14,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.czyrux.countrykata.R;
 import de.czyrux.countrykata.core.domain.image.ImageLoader;
-import de.czyrux.countrykata.ui.list.model.CountryUIModel;
+import de.czyrux.countrykata.ui.list.model.CountryItemViewModel;
 
 
 public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryViewHolder> {
 
     private final ImageLoader imageLoader;
-    private final List<CountryUIModel> countries;
+    private final List<CountryItemViewModel> countries;
     private final CountryListListener listListener;
 
     public CountryAdapter(ImageLoader imageLoader, CountryListListener listListener) {
@@ -29,7 +29,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
         this.countries = new ArrayList<>(20);
     }
 
-    public void setCountries(List<CountryUIModel> countries) {
+    public void setCountries(List<CountryItemViewModel> countries) {
         this.countries.clear();
         this.countries.addAll(countries);
         this.notifyDataSetChanged();
@@ -42,7 +42,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
 
     @Override
     public void onBindViewHolder(CountryViewHolder holder, int position) {
-        CountryUIModel country = countries.get(position);
+        CountryItemViewModel country = countries.get(position);
         holder.bind(country,imageLoader);
     }
 
@@ -70,7 +70,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
 
         }
 
-        public void bind(final CountryUIModel country, ImageLoader imageLoader) {
+        public void bind(final CountryItemViewModel country, ImageLoader imageLoader) {
             imageLoader.load(country.getImageUrl(), image);
             name.setText(country.getName());
             population.setText(country.getPopulation());

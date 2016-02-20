@@ -2,7 +2,7 @@ package de.czyrux.countrykata.ui.list;
 
 import java.util.List;
 
-import de.czyrux.countrykata.ui.list.model.CountryUIModel;
+import de.czyrux.countrykata.ui.list.model.CountryItemViewModel;
 
 public interface CountryListView {
 
@@ -10,7 +10,7 @@ public interface CountryListView {
 
     void hideProgressBar();
 
-    void showCountryList(List<CountryUIModel> countryList);
+    void showCountryList(List<CountryItemViewModel> countryList);
 
     void showEmptyText();
 
