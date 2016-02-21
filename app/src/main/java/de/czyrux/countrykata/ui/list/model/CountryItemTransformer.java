@@ -8,7 +8,7 @@ import de.czyrux.countrykata.core.domain.country.Country;
 import de.czyrux.countrykata.core.domain.country.CountryImageBuilder;
 import de.czyrux.countrykata.ui.Transformer;
 
-public class CountryTransformer implements Transformer<Country, CountryItemViewModel> {
+public class CountryItemTransformer implements Transformer<Country, CountryItemViewModel> {
 
     @Override
     public CountryItemViewModel transform(@NonNull Country country) {

@@ -7,19 +7,19 @@ import de.czyrux.countrykata.core.domain.country.Country;
 import de.czyrux.countrykata.core.domain.country.CountryService;
 import de.czyrux.countrykata.ui.Presenter;
 import de.czyrux.countrykata.ui.TransformerUtil;
-import de.czyrux.countrykata.ui.list.model.CountryTransformer;
+import de.czyrux.countrykata.ui.list.model.CountryItemTransformer;
 import de.czyrux.countrykata.ui.list.model.CountryItemViewModel;
 
 public class CountryListPresenter implements Presenter<CountryListView>, CountryListListener{
 
     private final CountryService service;
-    private final CountryTransformer transformer;
+    private final CountryItemTransformer transformer;
     private final CountryListNavigator navigator;
 
     private CountryListView view;
     private List<Country> countryList;
 
-    public CountryListPresenter(CountryService service, CountryTransformer transformer, CountryListNavigator navigator) {
+    public CountryListPresenter(CountryService service, CountryItemTransformer transformer, CountryListNavigator navigator) {
         this.service = service;
         this.transformer = transformer;
         this.navigator = navigator;

@@ -19,7 +19,7 @@ import de.czyrux.countrykata.core.domain.country.CountryService;
 import de.czyrux.countrykata.core.domain.image.ImageLoader;
 import de.czyrux.countrykata.core.inject.Injector;
 import de.czyrux.countrykata.ui.detail.CountryDetailActivity;
-import de.czyrux.countrykata.ui.list.model.CountryTransformer;
+import de.czyrux.countrykata.ui.list.model.CountryItemTransformer;
 import de.czyrux.countrykata.ui.list.model.CountryItemViewModel;
 
 public class CountryListActivity extends AppCompatActivity implements CountryListView, CountryListNavigator {
@@ -48,7 +48,7 @@ public class CountryListActivity extends AppCompatActivity implements CountryLis
         imageLoader = Injector.imageLoader();
 
         CountryService countryService = Injector.countryService();
-        presenter = new CountryListPresenter(countryService, new CountryTransformer(), this);
+        presenter = new CountryListPresenter(countryService, new CountryItemTransformer(), this);
 
         setupViews();
     }
