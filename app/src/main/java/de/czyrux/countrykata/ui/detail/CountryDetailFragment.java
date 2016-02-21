@@ -33,8 +33,6 @@ public class CountryDetailFragment extends BaseFragment implements CountryDetail
 
     private final static NumberFormat NUMBER_FORMAT = NumberFormat.getInstance(Locale.getDefault());
 
-    @Bind(R.id.country_detail_content)
-    View contentView;
     @Bind(R.id.country_detail_progressbar)
     ProgressBar progressBar;
 
@@ -103,7 +101,7 @@ public class CountryDetailFragment extends BaseFragment implements CountryDetail
         fragment.setArguments(args);
         return fragment;
     }
-    
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -161,7 +159,6 @@ public class CountryDetailFragment extends BaseFragment implements CountryDetail
 
     @Override
     public void populateCountry(Country country) {
-        contentView.setVisibility(View.VISIBLE);
 
         // Main block
         imageLoader.load(CountryImageBuilder.obtainImageUrl(country), imageView);
@@ -184,6 +181,40 @@ public class CountryDetailFragment extends BaseFragment implements CountryDetail
         giniTextView.setText(NUMBER_FORMAT.format(country.getGini()));
 
         // Location block
+        populateLocation(country);
+
+        // Translations block
+        populateTranslations(country);
+
+
+        // Misc block
+        populateMisc(country);
+
+    }
+
+    private void populateMisc(Country country) {
+        callingCodesTextView.setText(Arrays.toString(country.getCallingCodes()));
+        topLevelDomainTextView.setText(Arrays.toString(country.getTopLevelDomain()));
+        currencyTextView.setText(Arrays.toString(country.getCurrencies()));
+        languagesTextView.setText(Arrays.toString(country.getLanguages()));
+        alphaCodeTextView.setText(country.getAlpha2Code() + ", " + country.getAlpha3Code());
+    }
+
+    private void populateTranslations(Country country) {
+        translationsLayout.removeAllViews();
+
+        if (country.getTranslations() != null) {
+            for (Map.Entry<String, String> translationEntry : country.getTranslations().entrySet()) {
+                View itemView = LayoutInflater.from(translationsLayout.getContext()).inflate(R.layout.detail_translation_item, translationsLayout, false);
+                ((TextView) ButterKnife.findById(itemView, R.id.country_detail_translation_item_language)).setText(translationEntry.getKey());
+                ((TextView) ButterKnife.findById(itemView, R.id.country_detail_translation_item_translation)).setText(translationEntry.getValue());
+
+                translationsLayout.addView(itemView);
+            }
+        }
+    }
+
+    private void populateLocation(Country country) {
         locationTextView.setText(country.getRegion() + ", " + country.getSubregion());
         timezonesTextView.setText(Arrays.toString(country.getTimezones()));
 
@@ -209,28 +240,6 @@ public class CountryDetailFragment extends BaseFragment implements CountryDetail
             neighboursTextView.setText(R.string.detail_no_neighbours);
             exploreNeighboursTextView.setVisibility(View.GONE);
         }
-
-        // Translations block
-        translationsLayout.removeAllViews();
-
-        if (country.getTranslations() != null) {
-            for (Map.Entry<String, String> translationEntry : country.getTranslations().entrySet()) {
-                View itemView = LayoutInflater.from(contentView.getContext()).inflate(R.layout.detail_translation_item, translationsLayout, false);
-                ((TextView) ButterKnife.findById(itemView, R.id.country_detail_translation_item_language)).setText(translationEntry.getKey());
-                ((TextView) ButterKnife.findById(itemView, R.id.country_detail_translation_item_translation)).setText(translationEntry.getValue());
-
-                translationsLayout.addView(itemView);
-            }
-        }
-
-
-        // Misc block
-        callingCodesTextView.setText(Arrays.toString(country.getCallingCodes()));
-        topLevelDomainTextView.setText(Arrays.toString(country.getTopLevelDomain()));
-        currencyTextView.setText(Arrays.toString(country.getCurrencies()));
-        languagesTextView.setText(Arrays.toString(country.getLanguages()));
-        alphaCodeTextView.setText(country.getAlpha2Code() + ", " + country.getAlpha3Code());
-
     }
 
     @Override
