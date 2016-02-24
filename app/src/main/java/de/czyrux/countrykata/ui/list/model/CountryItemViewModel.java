@@ -1,6 +1,6 @@
 package de.czyrux.countrykata.ui.list.model;
 
-public class CountryUIModel {
+public class CountryItemViewModel {
 
     private final String name;
     private final String imageUrl;
@@ -8,7 +8,7 @@ public class CountryUIModel {
     private final String subregion;
     private final String alphaCode;
 
-    public CountryUIModel(String name, String imageUrl, String population, String subregion, String alphaCode) {
+    public CountryItemViewModel(String name, String imageUrl, String population, String subregion, String alphaCode) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.population = population;

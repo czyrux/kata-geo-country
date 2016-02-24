@@ -8,13 +8,13 @@ import de.czyrux.countrykata.core.domain.country.Country;
 import de.czyrux.countrykata.core.domain.country.CountryImageBuilder;
 import de.czyrux.countrykata.ui.Transformer;
 
-public class CountryTransformer implements Transformer<Country, CountryUIModel> {
+public class CountryItemTransformer implements Transformer<Country, CountryItemViewModel> {
 
     @Override
-    public CountryUIModel transform(@NonNull Country country) {
+    public CountryItemViewModel transform(@NonNull Country country) {
         String imageUrl = CountryImageBuilder.obtainImageUrl(country);
         String population = String.format(Locale.GERMAN, "%,d", country.getPopulation());
 
-        return new CountryUIModel(country.getName(), imageUrl, population, country.getSubregion(), country.getAlpha2Code());
+        return new CountryItemViewModel(country.getName(), imageUrl, population, country.getSubregion(), country.getAlpha2Code());
     }
 }

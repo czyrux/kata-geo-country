@@ -19,7 +19,7 @@ import de.czyrux.countrykata.core.domain.country.CountryService;
 import de.czyrux.countrykata.core.domain.image.ImageLoader;
 import de.czyrux.countrykata.core.inject.Injector;
 import de.czyrux.countrykata.ui.detail.CountryDetailActivity;
-import de.czyrux.countrykata.ui.list.model.CountryUIModel;
+import de.czyrux.countrykata.ui.list.model.CountryItemViewModel;
 import de.czyrux.countrykata.ui.presenter.BasePresenterActivity;
 import de.czyrux.countrykata.ui.presenter.PresenterFactory;
 
@@ -59,25 +59,25 @@ public class CountryListActivity2 extends BasePresenterActivity<CountryListContr
     protected void onStart() {
         Log.d("activity", "onStart");
         super.onStart();
+        presenter.onViewAttached(this);
     }
 
     @Override
     protected void onResume() {
         Log.d("activity", "onResume");
         super.onResume();
-        presenter.onViewAttached(this);
     }
 
     @Override
     protected void onPause() {
         Log.d("activity", "onPause");
-        presenter.onViewDetached();
         super.onPause();
     }
 
     @Override
     protected void onStop() {
         Log.d("activity", "onStop");
+        presenter.onViewDetached();
         super.onStop();
     }
 
@@ -114,7 +114,7 @@ public class CountryListActivity2 extends BasePresenterActivity<CountryListContr
     }
 
     @Override
-    public void showCountryList(List<CountryUIModel> countryList) {
+    public void showCountryList(List<CountryItemViewModel> countryList) {
         CountryAdapter adapter = (CountryAdapter) countryListView.getAdapter();
         if (adapter == null) {
             adapter = new CountryAdapter(imageLoader, presenter);

@@ -1,7 +1,7 @@
 package de.czyrux.countrykata.ui.list;
 
-import de.czyrux.countrykata.ui.list.model.CountryUIModel;
+import de.czyrux.countrykata.ui.list.model.CountryItemViewModel;
 
 public interface CountryListListener {
-    void onCountryClicked(CountryUIModel country, int position);
+    void onCountryClicked(CountryItemViewModel country, int position);
 }

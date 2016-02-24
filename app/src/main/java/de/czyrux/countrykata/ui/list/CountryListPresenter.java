@@ -6,20 +6,20 @@ import de.czyrux.countrykata.core.domain.Callback;
 import de.czyrux.countrykata.core.domain.country.Country;
 import de.czyrux.countrykata.core.domain.country.CountryService;
 import de.czyrux.countrykata.ui.TransformerUtil;
-import de.czyrux.countrykata.ui.list.model.CountryTransformer;
-import de.czyrux.countrykata.ui.list.model.CountryUIModel;
+import de.czyrux.countrykata.ui.list.model.CountryItemTransformer;
+import de.czyrux.countrykata.ui.list.model.CountryItemViewModel;
 
 public class CountryListPresenter implements CountryListContract.Presenter {
 
     private final CountryService service;
-    private final CountryTransformer transformer;
+    private final CountryItemTransformer transformer;
     private final CountryListNavigator navigator;
 
     private CountryListContract.View view;
     private List<Country> countryList;
     private boolean isLoading;
 
-    public CountryListPresenter(CountryService service, CountryTransformer transformer, CountryListNavigator navigator) {
+    public CountryListPresenter(CountryService service, CountryItemTransformer transformer, CountryListNavigator navigator) {
         this.service = service;
         this.transformer = transformer;
         this.navigator = navigator;
@@ -72,8 +72,8 @@ public class CountryListPresenter implements CountryListContract.Presenter {
         if (countryList == null || countryList.isEmpty()) {
             this.view.showEmptyText();
         } else {
-            List<CountryUIModel> uiModelList = TransformerUtil.transform(countryList, transformer);
-            this.view.showCountryList(uiModelList);
+            List<CountryItemViewModel> viewModelList = TransformerUtil.transform(countryList, transformer);
+            this.view.showCountryList(viewModelList);
         }
     }
 
@@ -88,7 +88,7 @@ public class CountryListPresenter implements CountryListContract.Presenter {
 
 
     @Override
-    public void onCountryClicked(CountryUIModel country, int position) {
+    public void onCountryClicked(CountryItemViewModel country, int position) {
         navigator.navigateToDetail(country.getAlphaCode());
     }
 }

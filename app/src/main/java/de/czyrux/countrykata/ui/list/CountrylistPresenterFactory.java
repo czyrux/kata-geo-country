@@ -1,7 +1,7 @@
 package de.czyrux.countrykata.ui.list;
 
 import de.czyrux.countrykata.core.domain.country.CountryService;
-import de.czyrux.countrykata.ui.list.model.CountryTransformer;
+import de.czyrux.countrykata.ui.list.model.CountryItemTransformer;
 import de.czyrux.countrykata.ui.presenter.PresenterFactory;
 
 public class CountrylistPresenterFactory implements PresenterFactory<CountryListContract.Presenter> {
@@ -16,6 +16,6 @@ public class CountrylistPresenterFactory implements PresenterFactory<CountryList
 
     @Override
     public CountryListPresenter create() {
-        return new CountryListPresenter(countryService, new CountryTransformer(), navigator);
+        return new CountryListPresenter(countryService, new CountryItemTransformer(), navigator);
     }
 }
