@@ -7,6 +7,7 @@ public class CountryLocationViewModel {
     String longitude;
     boolean showExploreNeighbours;
     String neighbours;
+    String timezones;
 
     public String getLocationTitle() {
         return locationTitle;
@@ -26,5 +27,9 @@ public class CountryLocationViewModel {
 
     public String getNeighbours() {
         return neighbours;
+    }
+
+    public String getTimezones() {
+        return timezones;
     }
 }

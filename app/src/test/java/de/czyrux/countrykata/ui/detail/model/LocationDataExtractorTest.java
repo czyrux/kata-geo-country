@@ -108,4 +108,39 @@ public class LocationDataExtractorTest {
         assertEquals(viewModel.getNeighbours(), LocationDataExtractor.NO_NEIGHBOURS);
     }
 
+    @Test
+    public void extract_Should_Timezones_When_CountryHasTimezones() {
+
+        Country country = new Country();
+        country.setTimezones(new String[]{"something", "somethingelse"});
+
+        CountryLocationViewModel viewModel = extractor.extract(country);
+
+        assertNotNull(viewModel);
+        assertEquals(viewModel.getTimezones(), "[something, somethingelse]");
+    }
+
+    @Test
+    public void extract_Should_SetEmtpy_When_CountryHasNoTimezones() {
+
+        Country country = new Country();
+        country.setTimezones(new String[]{});
+
+        CountryLocationViewModel viewModel = extractor.extract(country);
+
+        assertNotNull(viewModel);
+        assertEquals(viewModel.getTimezones(), "");
+    }
+
+    @Test
+    public void extract_Should_SetNothing_When_CountryHasNullTimezones() {
+
+        Country country = new Country();
+        country.setTimezones(null);
+
+        CountryLocationViewModel viewModel = extractor.extract(country);
+
+        assertNotNull(viewModel);
+        assertEquals(viewModel.getTimezones(), "");
+    }
 }

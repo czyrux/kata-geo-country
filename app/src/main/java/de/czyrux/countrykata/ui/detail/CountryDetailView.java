@@ -1,10 +1,10 @@
 package de.czyrux.countrykata.ui.detail;
 
-import de.czyrux.countrykata.core.domain.country.Country;
+import de.czyrux.countrykata.ui.detail.model.CountryDetailViewModel;
 
 public interface CountryDetailView {
 
-    void populateCountry(Country country);
+    void populateCountry(CountryDetailViewModel country);
 
     void showErrorMessage(Throwable error);
 

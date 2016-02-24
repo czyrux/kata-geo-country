@@ -3,6 +3,8 @@ package de.czyrux.countrykata.ui.detail.model;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
+import java.util.Arrays;
+
 import de.czyrux.countrykata.core.domain.country.Country;
 
 public class LocationDataExtractor {
@@ -20,6 +22,7 @@ public class LocationDataExtractor {
         CountryLocationViewModel viewModel = new CountryLocationViewModel();
 
         viewModel.locationTitle = country.getRegion() + SEPARATOR + country.getSubregion();
+        viewModel.timezones = getArrayAsStringOrEmpty(country.getTimezones());
 
         if (country.getLatlong() != null && country.getLatlong().length == 2) {
             viewModel.latitude = String.valueOf(country.getLatlong()[0]);
@@ -48,5 +51,10 @@ public class LocationDataExtractor {
         }
 
         return viewModel;
+    }
+
+    @NonNull
+    private String getArrayAsStringOrEmpty(String[] array) {
+        return array != null && array.length > 0 ? Arrays.toString(array) : "";
     }
 }

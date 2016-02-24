@@ -4,20 +4,23 @@ import de.czyrux.countrykata.core.domain.Callback;
 import de.czyrux.countrykata.core.domain.country.Country;
 import de.czyrux.countrykata.core.domain.country.CountryService;
 import de.czyrux.countrykata.ui.Presenter;
+import de.czyrux.countrykata.ui.detail.model.CountryDetailTransformer;
 
 public class CountryDetailPresenter implements Presenter<CountryDetailView> {
 
     private final CountryService service;
     private final String countryCode;
     private final CountryDetailNavigator navigator;
+    private final CountryDetailTransformer transformer;
 
     private CountryDetailView view;
     private Country country;
 
-    public CountryDetailPresenter(CountryService service, String countryCode, CountryDetailNavigator navigator) {
+    public CountryDetailPresenter(CountryService service, String countryCode, CountryDetailNavigator navigator, CountryDetailTransformer transformer) {
         this.service = service;
         this.countryCode = countryCode;
         this.navigator = navigator;
+        this.transformer = transformer;
     }
 
     @Override
@@ -60,7 +63,7 @@ public class CountryDetailPresenter implements Presenter<CountryDetailView> {
         }
 
         this.view.hideProgressBar();
-        this.view.populateCountry(country);
+        this.view.populateCountry(transformer.transform(country));
     }
 
     private void handleError(Throwable error) {
