@@ -25,7 +25,7 @@ import de.czyrux.countrykata.ui.detail.CountryDetailActivity;
 import de.czyrux.countrykata.ui.list.model.CountryItemViewModel;
 import de.czyrux.countrykata.ui.presenter.PresenterLoader;
 
-public class CountryListActivity extends AppCompatActivity implements CountryListNavigator, CountryListContract.View,
+public class CountryListActivity extends AppCompatActivity implements CountryListContract.Navigator, CountryListContract.View,
         LoaderManager.LoaderCallbacks<CountryListContract.Presenter> {
 
     @Bind(R.id.toolbar)

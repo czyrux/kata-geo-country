@@ -6,10 +6,10 @@ import de.czyrux.countrykata.ui.presenter.PresenterFactory;
 
 public class CountrylistPresenterFactory implements PresenterFactory<CountryListContract.Presenter> {
 
-    private final CountryListNavigator navigator;
+    private final CountryListContract.Navigator navigator;
     private final CountryService countryService;
 
-    public CountrylistPresenterFactory(CountryListNavigator navigator, CountryService countryService) {
+    public CountrylistPresenterFactory(CountryListContract.Navigator navigator, CountryService countryService) {
         this.navigator = navigator;
         this.countryService = countryService;
     }

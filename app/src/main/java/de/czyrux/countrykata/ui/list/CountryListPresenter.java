@@ -13,13 +13,13 @@ public class CountryListPresenter implements CountryListContract.Presenter {
 
     private final CountryService service;
     private final CountryItemTransformer transformer;
-    private final CountryListNavigator navigator;
+    private final CountryListContract.Navigator navigator;
 
     private CountryListContract.View view;
     private List<Country> countryList;
     private boolean isLoading;
 
-    public CountryListPresenter(CountryService service, CountryItemTransformer transformer, CountryListNavigator navigator) {
+    public CountryListPresenter(CountryService service, CountryItemTransformer transformer, CountryListContract.Navigator navigator) {
         this.service = service;
         this.transformer = transformer;
         this.navigator = navigator;

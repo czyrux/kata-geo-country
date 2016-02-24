@@ -33,4 +33,9 @@ public interface CountryListContract {
         @Override
         void onCountryClicked(CountryItemViewModel country, int position);
     }
+
+    interface Navigator {
+
+        void navigateToDetail(String alpha);
+    }
 }

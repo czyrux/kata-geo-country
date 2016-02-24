@@ -23,7 +23,7 @@ import de.czyrux.countrykata.ui.list.model.CountryItemViewModel;
 import de.czyrux.countrykata.ui.presenter.BasePresenterActivity;
 import de.czyrux.countrykata.ui.presenter.PresenterFactory;
 
-public class CountryListActivity2 extends BasePresenterActivity<CountryListContract.Presenter> implements CountryListNavigator, CountryListContract.View {
+public class CountryListActivity2 extends BasePresenterActivity<CountryListContract.Presenter> implements CountryListContract.Navigator, CountryListContract.View {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
